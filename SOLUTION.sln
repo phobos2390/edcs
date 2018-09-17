@@ -3,9 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2013
 VisualStudioVersion = 12.0.31101.0
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("[PROJECT_GUID]") = "[SOLUTION].Tests", "[SOLUTION]\Tests\[SOLUTION].Tests.csproj", "[TEST_GUID]"
+Project("[PROJECT_GUID]") = "SOLUTION.Tests", "SOLUTION\Tests\SOLUTION.Tests.csproj", "[TEST_GUID]"
 EndProject
-Project("[PROJECT_GUID]") = "[SOLUTION]", "[SOLUTION]\[SOLUTION].csproj", "[LIB_GUID]"
+Project("[PROJECT_GUID]") = "SOLUTION", "SOLUTION\SOLUTION.csproj", "[LIB_GUID]"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

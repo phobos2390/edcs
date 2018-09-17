@@ -11,7 +11,7 @@ var configuration = Argument("configuration", "Release");
 //////////////////////////////////////////////////////////////////////
 
 // Define directories.
-var buildDir = Directory("./src/Example/bin") + Directory(configuration);
+var buildDir = Directory("./SOLUTION/bin") + Directory(configuration);
 
 //////////////////////////////////////////////////////////////////////
 // TASKS
@@ -27,7 +27,7 @@ Task("Restore-NuGet-Packages")
     .IsDependentOn("Clean")
     .Does(() =>
 {
-    NuGetRestore("./[SOLUTION].sln");
+    NuGetRestore("./SOLUTION.sln");
 });
 
 Task("Build")
@@ -37,13 +37,13 @@ Task("Build")
     if(IsRunningOnWindows())
     {
       // Use MSBuild
-      MSBuild("./[SOLUTION].sln", settings =>
+      MSBuild("./SOLUTION.sln", settings =>
         settings.SetConfiguration(configuration));
     }
     else
     {
       // Use XBuild
-      XBuild("./[SOLUTION].sln", settings =>
+      XBuild("./SOLUTION.sln", settings =>
         settings.SetConfiguration(configuration));
     }
 });
