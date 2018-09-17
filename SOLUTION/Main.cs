@@ -4,7 +4,7 @@ namespace SOLUTION
 {
     public class SOLUTIONMAIN
     {
-        public static string Main(string[] args)
+        public static void Main(string[] args)
         {
             Console.WriteLine("Hello World");
         }

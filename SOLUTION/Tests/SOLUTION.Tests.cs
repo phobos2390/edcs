@@ -6,7 +6,7 @@ namespace SOLUTION.Tests
     public sealed class SOLUTION_TESTS
     {
         [Test]
-        public void Example_Test()
+        public void SOLUTION_Test()
         {
             Assert.AreEqual(true, true);
         }

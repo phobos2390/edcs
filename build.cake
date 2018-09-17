@@ -52,7 +52,7 @@ Task("Run-Unit-Tests")
     .IsDependentOn("Build")
     .Does(() =>
 {
-    NUnit3("./src/test/**/bin/" + configuration + "/*.Tests.dll", new NUnit3Settings {
+    NUnit3("./SOLUTION/Tests/**/bin/" + configuration + "/*.Tests.dll", new NUnit3Settings {
         NoResults = true
         });
 });
