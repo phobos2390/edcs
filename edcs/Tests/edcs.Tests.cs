@@ -1,12 +1,12 @@
 using NUnit.Framework;
 
-namespace SOLUTION.Tests
+namespace edcs.Tests
 {
     [TestFixture]
-    public sealed class SOLUTION_TESTS
+    public sealed class edcs_TESTS
     {
         [Test]
-        public void SOLUTION_Test()
+        public void edcs_Test()
         {
             Assert.AreEqual(true, true);
         }

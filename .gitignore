@@ -1,0 +1,8 @@
+
+packages/
+tools/
+clean.sh
+*/bin/*
+*/obj/*
+*/Tests/obj/
+*/Tests/bin/

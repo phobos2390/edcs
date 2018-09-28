@@ -1,0 +1,28 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2013
+VisualStudioVersion = 12.0.31101.0
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{6E0BF60E-31E2-BC1F-BA3B-221EAF71EFCE}") = "edcs.Tests", "edcs\Tests\edcs.Tests.csproj", "{E021AA06-3EA2-1DAF-B831-212ECB12FC4E}"
+EndProject
+Project("{6E0BF60E-31E2-BC1F-BA3B-221EAF71EFCE}") = "edcs", "edcs\edcs.csproj", "{6E099EAA-E221-411F-A1C1-331ECB76FC4E}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{E021AA06-3EA2-1DAF-B831-212ECB12FC4E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E021AA06-3EA2-1DAF-B831-212ECB12FC4E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E021AA06-3EA2-1DAF-B831-212ECB12FC4E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E021AA06-3EA2-1DAF-B831-212ECB12FC4E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6E099EAA-E221-411F-A1C1-331ECB76FC4E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6E099EAA-E221-411F-A1C1-331ECB76FC4E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6E099EAA-E221-411F-A1C1-331ECB76FC4E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6E099EAA-E221-411F-A1C1-331ECB76FC4E}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

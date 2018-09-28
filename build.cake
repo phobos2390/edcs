@@ -11,7 +11,7 @@ var configuration = Argument("configuration", "Release");
 //////////////////////////////////////////////////////////////////////
 
 // Define directories.
-var buildDir = Directory("./SOLUTION/bin") + Directory(configuration);
+var buildDir = Directory("./edcs/bin") + Directory(configuration);
 
 //////////////////////////////////////////////////////////////////////
 // TASKS
@@ -27,7 +27,7 @@ Task("Restore-NuGet-Packages")
     .IsDependentOn("Clean")
     .Does(() =>
 {
-    NuGetRestore("./SOLUTION.sln");
+    NuGetRestore("./edcs.sln");
 });
 
 Task("Build")
@@ -37,13 +37,13 @@ Task("Build")
     if(IsRunningOnWindows())
     {
       // Use MSBuild
-      MSBuild("./SOLUTION.sln", settings =>
+      MSBuild("./edcs.sln", settings =>
         settings.SetConfiguration(configuration));
     }
     else
     {
       // Use XBuild
-      XBuild("./SOLUTION.sln", settings =>
+      XBuild("./edcs.sln", settings =>
         settings.SetConfiguration(configuration));
     }
 });
@@ -52,7 +52,7 @@ Task("Run-Unit-Tests")
     .IsDependentOn("Build")
     .Does(() =>
 {
-    NUnit3("./SOLUTION/Tests/**/bin/" + configuration + "/*.Tests.dll", new NUnit3Settings {
+    NUnit3("./edcs/Tests/**/bin/" + configuration + "/*.Tests.dll", new NUnit3Settings {
         NoResults = true
         });
 });
