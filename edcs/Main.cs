@@ -8,6 +8,8 @@ namespace edcs
          UInt64 LineCount {get;}
         void InsertLine(UInt64 lineNumber, string line);
 
+        void RemoveLine(UInt64 lineNumber);
+        
         void AppendLine(string line);
 
         IEnumerable<string> List(string regex);
@@ -165,14 +167,19 @@ namespace edcs
 
         public void HandleLine(string line)
         {
+            UInt64 lineNumber = 0;
             switch(line.Split(' ')[0])
             {
                 case "a":
                     machine.State = new InsertState(model.LineCount, model, machine);
                     break;
                 case "i":
-                    UInt64 lineNumber = UInt64.Parse(line.Split(' ')[1]);
+                    lineNumber = UInt64.Parse(line.Split(' ')[1]);
                     machine.State = new InsertState(lineNumber,model,machine);
+                    break;
+                case "r":
+                    lineNumber = UInt64.Parse(line.Split(' ')[1]);
+                    model.RemoveLine(lineNumber);
                     break;
                 case "l":
                     foreach(string s in model.List())
