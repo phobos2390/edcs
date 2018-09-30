@@ -172,14 +172,17 @@ namespace edcs
             {
                 case "a":
                     machine.State = new InsertState(model.LineCount, model, machine);
+                    Console.WriteLine("Appending starting at line {0}",model.LineCount);
                     break;
                 case "i":
                     lineNumber = UInt64.Parse(line.Split(' ')[1]);
                     machine.State = new InsertState(lineNumber,model,machine);
+                    Console.WriteLine("Inserting starting at line {0}",lineNumber);
                     break;
                 case "r":
                     lineNumber = UInt64.Parse(line.Split(' ')[1]);
-                    model.RemoveLine(lineNumber);
+                    model.RemoveLine(lineNumber + 1);
+                    Console.WriteLine("Removing line {0}",lineNumber + 1);
                     break;
                 case "l":
                     foreach(string s in model.List())
@@ -245,6 +248,7 @@ namespace edcs
 
         public void Quit()
         {
+            Console.WriteLine("Thank you for choosing Ed C#");
             running = false;
         }
 
@@ -263,6 +267,7 @@ namespace edcs
                {
                     fs.WriteLine(line);
                 }
+                Console.WriteLine("Wrote {0} lines to file {1}", model.LineCount, filename);
             }
             catch (Exception e)
             {
