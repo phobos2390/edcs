@@ -174,6 +174,12 @@ namespace edcs
                     UInt64 lineNumber = UInt64.Parse(line.Split(' ')[1]);
                     machine.State = new InsertState(lineNumber,model,machine);
                     break;
+                case "l":
+                    foreach(string s in model.List())
+                    {
+                        Console.WriteLine(s);
+                    }
+                    break;
                 case "w":
                     if(line.Split(' ').Length == 1)
                     {
@@ -190,6 +196,9 @@ namespace edcs
                 case "wq":
                     machine.Write();
                     machine.Quit();
+                    break;
+                default:
+                    Console.WriteLine("Unknown Command: {0}", line);
                     break;
             }
         }
@@ -266,21 +275,29 @@ namespace edcs
         public void Read(string filename)
         {
             currentFile = filename;
-            System.IO.StreamReader fs = new System.IO.StreamReader(filename);
+            System.IO.StreamReader fs = null;
             try
             {
+                fs = new System.IO.StreamReader(filename);
                 while(!fs.EndOfStream)
                 {
                     model.AppendLine(fs.ReadLine());
                 }
             }
+            catch (System.IO.FileNotFoundException)
+            {
+                Console.WriteLine("New File: " + filename);
+            }
             catch (Exception e)
             {
-                Console.Write("Exception thrown: " + e);
+                Console.WriteLine("Exception thrown: " + e);
             }
             finally
             {
-                fs.Close();
+                if(fs != null)
+                {
+                    fs.Close();
+                }
             }
         }
         public IState State
