@@ -23,6 +23,11 @@ namespace edcs
     {
         LinkedList<string> lines;
 
+        public Model()
+        {
+            lines = new LinkedList<string>();
+        }
+
         public UInt64 LineCount
         {
             get
@@ -88,35 +93,17 @@ namespace edcs
             {
                 lines.AddFirst(line);
             }
-            else if(lineNumber == (UInt64) lines.Count - 1)
+            else if(lineNumber == (UInt64) lines.Count)
             {
                 AppendLine(line);
             }
-            else if((UInt64)lines.Count - lineNumber <= lineNumber)
+            else
             {
-                UInt64 i = 0;
-                LinkedListNode<string> iter = lines.Last;
-                while(iter != lines.Last && ((UInt64) lines.Count - lineNumber) != ++i )
+                LinkedListNode<string> currentLine = GetLineAtNumber(lineNumber);
+                if(currentLine != null)
                 {
-                    iter = iter.Previous;
+                    lines.AddBefore(currentLine, line);
                 }
-                if(((UInt64) lines.Count - lineNumber) == i)
-                {
-                    lines.AddAfter(iter, line);
-                } 
-            }
-            else if((UInt64)lines.Count - lineNumber > lineNumber)
-            {
-                UInt64 i = 0;
-                LinkedListNode<string> iter = lines.First;
-                while(iter != lines.Last && lineNumber != ++i )
-                {
-                    iter = iter.Next;
-                }
-                if(lineNumber == i)
-                {
-                    lines.AddAfter(iter, line);
-                } 
             }
         }
 
@@ -173,18 +160,35 @@ namespace edcs
         public CommandState(IModel model, IStateMachine machine)
         {
             this.model = model;
+            this.machine = machine;
         }
 
         public void HandleLine(string line)
         {
-            switch(line)
+            switch(line.Split(' ')[0])
             {
-                case "w":
-                    break;
                 case "a":
                     machine.State = new InsertState(model.LineCount, model, machine);
                     break;
+                case "i":
+                    UInt64 lineNumber = UInt64.Parse(line.Split(' ')[1]);
+                    machine.State = new InsertState(lineNumber,model,machine);
+                    break;
+                case "w":
+                    if(line.Split(' ').Length == 1)
+                    {
+                        machine.Write();
+                    }
+                    else
+                    {
+                        machine.Write(line.Split(' ')[1]);
+                    }
+                    break;
                 case "q":
+                    machine.Quit();
+                    break;
+                case "wq":
+                    machine.Write();
                     machine.Quit();
                     break;
             }
@@ -216,6 +220,12 @@ namespace edcs
         private bool running;
         IModel model;
         string currentFile;
+
+        public Controller()
+        {
+            model = new Model();
+            currentState = new CommandState(model,this);
+        }
 
         public void Quit()
         {
@@ -286,7 +296,7 @@ namespace edcs
             }
         }
 
-	    public void Run()
+        public void Run()
         {
             running = true;
             while(running)
@@ -294,14 +304,19 @@ namespace edcs
                 string newLine = Console.ReadLine();
                 currentState.HandleLine(newLine);
             }
-        }	
+        }    
     }
     
     public class edcsMAIN
     {
         public static void Main(string[] args)
         {
-            Console.WriteLine("Hello World");
+            Controller controller = new Controller();
+            if(args.Length == 1)
+            {
+                controller.Read(args[0]);
+                controller.Run();
+            }
         }
     }
 }
