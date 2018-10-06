@@ -75,6 +75,27 @@ namespace edcs.Tests
         }
 
         [Test]
+        public void edcs_model_remove_line_Test()
+        {
+            Model model = new Model();
+            model.AppendLine("It's me.");
+            model.AppendLine("Hello");
+            model.AppendLine("You Wonderful");
+            model.AppendLine("World!");
+            model.RemoveLine(1);
+            StringBuilder output = new StringBuilder();
+            string[] expectedLines = {"It's me.","You Wonderful","World!"};
+            int lc = 0;
+            foreach(string line in model.List())
+            {
+                Assert.AreEqual(expectedLines[lc++],line);
+                output.Append(line).Append("\n");
+                System.Console.WriteLine(line);
+            }
+            Assert.AreEqual("It's me.\nYou Wonderful\nWorld!\n",output.ToString());
+        }
+
+        [Test]
         public void edcs_state_machine_Test()
         {
             IStateMachine mock_machine = new FakeStateMachine();

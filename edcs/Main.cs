@@ -49,12 +49,13 @@ namespace edcs
             {
                 returnLine = lines.Last;
             }
-            if((UInt64)lines.Count - lineNumber <= lineNumber)
+            else if((UInt64)lines.Count - lineNumber <= lineNumber)
             {
                 UInt64 i = 0;
                 LinkedListNode<string> iter = lines.Last;
-                while(iter != lines.Last && ((UInt64) lines.Count - lineNumber) != ++i )
+                while(iter != lines.First && ((UInt64) lines.Count - lineNumber) != i)
                 {
+                    ++i;
                     iter = iter.Previous;
                 }
                 if(((UInt64) lines.Count - lineNumber) == i)
@@ -66,8 +67,9 @@ namespace edcs
             {
                 UInt64 i = 0;
                 LinkedListNode<string> iter = lines.First;
-                while(iter != lines.Last && lineNumber != ++i )
+                while(iter != lines.Last && lineNumber != i )
                 {
+                    ++i;
                     iter = iter.Next;
                 }
                 if(lineNumber == i)
@@ -176,18 +178,48 @@ namespace edcs
                     break;
                 case "i":
                     lineNumber = UInt64.Parse(line.Split(' ')[1]);
-                    machine.State = new InsertState(lineNumber,model,machine);
+                    machine.State = new InsertState(lineNumber - 1,model,machine);
                     Console.WriteLine("Inserting starting at line {0}",lineNumber);
                     break;
                 case "r":
                     lineNumber = UInt64.Parse(line.Split(' ')[1]);
-                    model.RemoveLine(lineNumber + 1);
-                    Console.WriteLine("Removing line {0}",lineNumber + 1);
+                    model.RemoveLine(lineNumber - 1);
+                    Console.WriteLine("Removing line {0}",lineNumber);
                     break;
                 case "l":
+                    bool listLineNumbers = false;
+                    bool listEndOfLine = false;
+                    if(line.Split(' ').Length > 1)
+                    {
+                       switch(line.Split(' ')[1])
+                        {
+                            case "eol":
+                                listEndOfLine = true;
+                                break;
+                            case "ln":
+                                listLineNumbers = true;
+                                break;
+                            case "v":
+                                listLineNumbers = true;
+                                listEndOfLine = true;
+                                break;
+                            default:
+                                break;
+                        }
+                    }
+                    UInt64 i = 0;
                     foreach(string s in model.List())
                     {
-                        Console.WriteLine(s);
+                        if(listLineNumbers)
+                        {
+                            Console.Write("{0}: ",++i);
+                        }
+                        Console.Write(s);
+                        if(listEndOfLine)
+                        {
+                            Console.Write("$");
+                        }
+                        Console.WriteLine();
                     }
                     break;
                 case "w":
@@ -208,7 +240,10 @@ namespace edcs
                     machine.Quit();
                     break;
                 default:
-                    Console.WriteLine("Unknown Command: {0}", line);
+                    if(line != "")
+                    {
+                        Console.WriteLine("Unknown Command: {0}", line);
+                    }
                     break;
             }
         }
